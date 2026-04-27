@@ -1,1 +1,14 @@
 # FinalIAtelegramAPI
+This application was completed for the COMMTECH track
+This application automates the order-taking and appointment-setting process for a barbershop/salon type business (inspired by my group’s thesis product). It provides a web-based interface for customers to enter order details, including their payment reference number, which are then simultaneously archived for business records and broadcast to the owner for immediate action through Telegram. (Though in a real business setting, this form is ideally accessible only after payment)
+
+The telegram bot API was used in order to utilize telegram as a notification platform, sending messages to the business owner. The link is found here: https://core.telegram.org/bots/api
+
+In order to run the program, one must first ensure the files are stored in one folder, with the “FinalIATGAPI.py” folder next to a folder entitled “templates”, with the “templates” folder containing the “FinalIAHTML.html” file. Once this is done, the application can be run by entering “http://127.0.0.1:5000” into the browser.
+
+The workflow begins with the input phase, where the user enters the customer’s name, service details, reference number, and appointment time into the FinalIAHTML.html web form. Upon clicking "Submit," the process moves into the transmission phase, where the browser sends a POST request to the /submit-order route within the Flask backend. This leads to the processing Phase, in which Flask captures the data as a dictionary, connects to the local MongoDB shaving_bar_biz database, and inserts the order into the incoming_orders collection. Once the database confirms the entry and assigns a unique id, the Notification Phase is triggered, calling the send_telegram function to package the order details and MongoDB ID into a JSON payload for the Telegram Bot API. This leads to the output phase, where the business owner receives a notification on their Telegram containing all necessary details to fulfill the service.
+
+The app has several limits, one of which is that it currently exists in isolation, so it isn’t useful without a system backing up and verifying actual purchase. Furthermore, there are no security checks such as verifying if the reference number or time inputted is valid before submission. Another limit, regarding the telegram API is that there is a number of messages per second limit, and though it is 30 messages per second, in a real, scaled business this could become a problem.
+
+AI USE DECLARATION
+AI was used in debugging and in helping me get Flask to work, since I had trouble figuring out a certain error. AI also helped clean up the code after the main features were implemented
